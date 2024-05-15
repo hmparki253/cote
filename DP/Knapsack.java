@@ -15,37 +15,24 @@ public class Knapsack {
 
     /**
      * 
-     * @param mW: knapsack의 maxWeight
-     * @param weight: 무게들
-     * @param value : 각 값
-     * @param n : 총 물건 종류 갯수
+     * @param mW: knapsack의 maxWeight 
+     * @param weight: 무게들 {10, 20, 30}
+     * @param value : 각 값 {60, 100, 120}
+     * @param n : 총 물건 종류 갯수 3
      * @return
      */
     private static int knapsack(int mW, int[] weight, int[] value, int n) {
-        int i, w;
-        int[][] K = new int[n + 1][mW + 1]; // 3 + 1 , 50 + 1 [4][51] -> 0~3 -> 0 ~ 51
-        for(i = 0; i <= n; i++) { // 0 | 3 | 1
-            for(w = 0; w <= mW; w++) { // 0 | 50 | 1
-                // 1 | 50 | 2
-                if(i == 0 || w == 0) {
-                    K[i][w] = 0; 
-                    // k[0][0] = 0
-                    // k[0][1] = 0
-                    // k[0][2] = 0
-                    // ...
-                    // k[0][49] = 0
-                    // k[1][0] = 0
-                }
-                else if(weight[i - 1] <= w) {
-                    // weight[0] (10) <= 
-                    K[i][w] = Math.max(value[i - 1] + K[i - 1][w - weight[i - 1]], K[i - 1][w]);
-                }
-                else {
-                    // K[1][1] = K[0][1];
-                    K[i][w] = K[i - 1][w];
+        int[][] dp = new int[n + 1][mW + 1]; // int[4: 0~3][51: 0~50]
+        // [0][w], [i][0]은 0이므로 제외하고 계산
+        for(int i = 1; i < n + 1; i++) { // 3
+            for(int w = 1; w < mW + 1; w++) { // 50
+                 if(weight[i - 1] <= w) {
+                    dp[i][w] = Math.max(value[i - 1] + dp[i - 1][w - weight[i - 1]], dp[i - 1][w]);
+                } else {
+                    dp[i][w] = dp[i - 1][w];
                 }
             }
         }
-        return K[n][mW]; // 최대 가치 반환
+        return dp[n][mW]; // 최대 가치 반환
     }
 }
