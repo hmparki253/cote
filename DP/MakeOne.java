@@ -26,20 +26,28 @@ public class MakeOne {
 
         for(int i = 2; i < x + 1; i++) {
             dp[i] = dp[i - 1] + 1;
+            // dp[2] = dp[1] (0) + 1 = 1
+            // dp[3] = dp[2] (1) + 1 = 2
+            // dp[4] = dp[3] (1) + 1 = 2
             if(i % 2 == 0) {
+                // i == 2
+                // i == 4
                 dp[i] = Math.min(dp[i], dp[i / 2] + 1);
+                // dp[2] = min(dp[2] (1), dp[1] (0) + 1) = 1
+                // dp[4] = min[dp[4] (2), dp[2] (1) + 1] = 2
             }
             if (i % 3 == 0) {
+                // i == 3
                 dp[i] = Math.min(dp[i], dp[i / 3] + 1);
+                // dp[3] = min(dp[3] (2), dp[1] (0) + 1) = 1
             }
             if (i % 5 == 0) {
                 dp[i] = Math.min(dp[i], dp[i / 5] + 1);
-            } 
-        }
-
-        
+            }
+            // dp[2] = 1;
+            // dp[3] = 1;
+            // dp[4] = 2;
+        }        
         return dp[x];
     }
-
-
 }
