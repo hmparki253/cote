@@ -19,12 +19,12 @@ public class Hwapyae {
     }
 
     public static int solve(int[] arr, int n, int m) {
-        int[] dp = new int[m + 1];
+        int[] dp = new int[m + 1]; // 0 ~ 15
         Arrays.fill(dp, 10001);
 
         dp[0] = 0;
-        for(int i = 0; i < n; i++) {
-            for(int j = arr[i]; j <= m; j++) {
+        for(int i = 0; i < n; i++) {    // 주어진 숫자 가짓 수 중
+            for(int j = arr[i]; j <= m; j++) { // 해당 슬롯을 탐색
                 if(dp[j - arr[i]] != 10001) {
                     dp[j] = Math.min(dp[j], dp[j - arr[i]] + 1);
                 }
